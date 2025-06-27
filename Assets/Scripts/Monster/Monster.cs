@@ -19,15 +19,22 @@ public class Monster : MonoBehaviour
     /// 오브젝트 이동 제어
     /// </summary>
     private Movement movement;
+    /// <summary>
+    /// 몬스터 스포너
+    /// 몬스터의 삭제를 몬스터 본인이 하지 않고 몬스터 스포너에 알려서 삭제한다.
+    /// 몬스터 리스트가 몬스터 스포너에게 있기 때문이다.
+    /// </summary>
+    private MonsterSpawner monsterSpawner;
 
     /// <summary>
     /// 이동하기 전 세팅을 하는 함수
     /// </summary>
     /// <param name="wayPoints">이동해야할 지점</param>
-    public void Setup(Transform[] wayPoints)
+    public void Setup(MonsterSpawner monsterSpawner, Transform[] wayPoints)
     {
         // movement에 컴포넌트 가져오기
         movement = GetComponent<Movement>();
+        this.monsterSpawner = monsterSpawner;
 
         // 적 이동 경로 wayPoints 정보 설정
         // wayPointsCount는 wayPoints의 갯수다.
@@ -85,7 +92,12 @@ public class Monster : MonoBehaviour
         else
         {
             // 게임 오브젝트 삭제
-            Destroy(gameObject);
+            // Destroy(gameObject);
         }
+    }
+
+    public void OnDie()
+    {
+        monsterSpawner.DestroyMonster(this);
     }
 }
