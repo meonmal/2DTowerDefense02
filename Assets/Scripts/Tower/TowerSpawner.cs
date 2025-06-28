@@ -12,6 +12,13 @@ public class TowerSpawner : MonoBehaviour
     /// </summary>
     [SerializeField]
     private MonsterSpawner monsterSpawner;
+    /// <summary>
+    /// 타워를 건설하는데 드는 비용
+    /// </summary>
+    [SerializeField]
+    private int towerBuildGold;
+    [SerializeField]
+    private PlayerGold playerGold;
 
     /// <summary>
     /// 타워를 생성하는 함수
@@ -19,6 +26,13 @@ public class TowerSpawner : MonoBehaviour
     /// <param name="tileTransform">타일 정보</param>
     public void TowerSpawn(Transform tileTransform)
     {
+        // 만약 현재 갖고 있는 돈보다 타워 건설비용이 더 많다면 실행
+        if(playerGold.CurrentGold < towerBuildGold)
+        {
+            // 실행 ㄴ
+            return;
+        }
+
         // 지역변수인 tile에 Tile 컴포넌트를 붙여준다.
         Tile tile = tileTransform.GetComponent<Tile>();
 
@@ -31,7 +45,8 @@ public class TowerSpawner : MonoBehaviour
 
         // 해당 타일에 타워를 설치하기 전 isBuildTower를 true로 변경
         tile.isBuildTower = true;
-
+        // 현재 갖고 있는 돈에서 타워 건설비용만큼 감소시킨다.
+        playerGold.CurrentGold -= towerBuildGold;
         // 본인이 정한 타일의 위치에 타워 소환
         // 타워 프리팹을, 본인이 정한 타워의 위치에 회전 없이 소환.
         GameObject clone = Instantiate(towerPrefab, tileTransform.position, Quaternion.identity);

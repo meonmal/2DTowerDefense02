@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+public enum MonsterDieType { Kill = 0, Arrive}
 public class Monster : MonoBehaviour
 {
     /// <summary>
@@ -25,6 +26,11 @@ public class Monster : MonoBehaviour
     /// 몬스터 리스트가 몬스터 스포너에게 있기 때문이다.
     /// </summary>
     private MonsterSpawner monsterSpawner;
+    /// <summary>
+    /// 몬스터가 죽으면 획득하는 골드
+    /// </summary>
+    [SerializeField]
+    private int gold = 50;
 
     /// <summary>
     /// 이동하기 전 세팅을 하는 함수
@@ -91,13 +97,20 @@ public class Monster : MonoBehaviour
         // 만약 다음으로 이동해야 할 wayPoint가 없다면 실행
         else
         {
+            // 적이 골 지점에 도착해서 죽은 것이라면 획득 가능한 골드를 0으로 만든다.
+            gold = 0;
             // 게임 오브젝트 삭제
             // Destroy(gameObject);
+            OnDie(MonsterDieType.Arrive);
         }
     }
 
-    public void OnDie()
+    /// <summary>
+    /// 몬스터가 죽을 때 실행되는 함수
+    /// </summary>
+    /// <param name="type">몬스터가 죽는 방법</param>
+    public void OnDie(MonsterDieType type)
     {
-        monsterSpawner.DestroyMonster(this);
+        monsterSpawner.DestroyMonster(type, this, gold);
     }
 }

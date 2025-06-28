@@ -159,3 +159,4 @@ MonoBehaviour:
   spawnPosition: {fileID: 2773461501114326619}
   attackRate: 1
   attackRange: 5
+  attackDamage: 2

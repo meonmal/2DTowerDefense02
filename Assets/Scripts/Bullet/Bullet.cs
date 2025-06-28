@@ -10,15 +10,22 @@ public class Bullet : MonoBehaviour
     /// 공격 대상
     /// </summary>
     private Transform target;
+    /// <summary>
+    /// 발사체가 주는 데미지
+    /// </summary>
+    private float damage;
 
     /// <summary>
     /// 세팅을 하는 함수
     /// </summary>
     /// <param name="target">공격 대상</param>
-    public void Setup(Transform target)
+    public void Setup(Transform target, float damage)
     {
         movement = GetComponent<Movement>();
+        // 타워가 설정해준 공격 대상
         this.target = target;
+        // 타워가 설정해준 데미지
+        this.damage = damage;
     }
 
     private void Update()
@@ -59,8 +66,10 @@ public class Bullet : MonoBehaviour
             return;
         }
 
-        // 적 사망 함수 호출
-        collision.GetComponent<Monster>().OnDie();
+        //// 적 사망 함수 호출
+        //collision.GetComponent<Monster>().OnDie();
+        // 몬스터의 체력을 damage만큼 감소
+        collision.GetComponent<MonsterHP>().TakeDamage(damage);
         // 오브젝트 삭제
         Destroy(gameObject);
     }

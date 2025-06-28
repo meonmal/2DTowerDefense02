@@ -31,6 +31,11 @@ public class TowerWeapon : MonoBehaviour
     [SerializeField]
     private float attackRange;
     /// <summary>
+    /// 타워의 공격력
+    /// </summary>
+    [SerializeField]
+    private float attackDamage;
+    /// <summary>
     /// 타워의 현재 상태
     /// </summary>
     private TowerState towerState = TowerState.SearchTarget;
@@ -203,6 +208,6 @@ public class TowerWeapon : MonoBehaviour
         // 발사체를, 스폰포지션에 회전 없이 소환
         GameObject clone = Instantiate(bullet, spawnPosition.position, Quaternion.identity);
         // 생성된 발사체에게 공격대상의 정보를 제공
-        clone.GetComponent<Bullet>().Setup(attackTarget);
+        clone.GetComponent<Bullet>().Setup(attackTarget, attackDamage);
     }
 }
