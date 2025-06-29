@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class MonsterSpawner : MonoBehaviour
 {
-    /// <summary>
-    /// 적 프리팹
-    /// </summary>
-    [SerializeField]
-    private GameObject monsterPrefab;
+    ///// <summary>
+    ///// 적 프리팹
+    ///// </summary>
+    //[SerializeField]
+    //private GameObject monsterPrefab;
     /// <summary>
     /// Slider 프리팹
     /// </summary>
@@ -25,11 +25,11 @@ public class MonsterSpawner : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform[] wayPoints;
-    /// <summary>
-    /// 소환 시간
-    /// </summary>
-    [SerializeField]
-    private float spawnTime;
+    ///// <summary>
+    ///// 소환 시간
+    ///// </summary>
+    //[SerializeField]
+    //private float spawnTime;
     /// <summary>
     /// 플레이어의 체력 컴포넌트
     /// </summary>
@@ -40,6 +40,14 @@ public class MonsterSpawner : MonoBehaviour
     /// </summary>
     [SerializeField]
     private PlayerGold playerGold;
+    /// <summary>
+    /// 현재 웨이브 정보
+    /// </summary>
+    private Wave currentWave;
+    /// <summary>
+    /// 현재 남아있는 몬스터의 숫자
+    /// </summary>
+    private int currentMonsterCount;
 
     /// <summary>
     /// 현재 생성되어 존재하는 모든 몬스터의 정보
@@ -50,6 +58,8 @@ public class MonsterSpawner : MonoBehaviour
     /// 생성 및 삭제는 어짜피 이 스크립트에서 하기에 set은 필요 없다.
     /// </summary>
     public List<Monster> MonsterList => monsterList;
+    public int CurrentMonsterCount => currentMonsterCount;
+    public int MaxMonsterCount => currentWave.maxMonsterSpawnCount;
 
     /// <summary>
     /// 게임 씬이 로드 되고 바로 호출되는 함수
@@ -59,6 +69,19 @@ public class MonsterSpawner : MonoBehaviour
         // 적 리스트를 메모리에 할당해준다.
         monsterList = new List<Monster>();
 
+        // StartCoroutine(SpawnMonster());
+    }
+
+    /// <summary>
+    /// 웨이브를 시작하는 함수
+    /// </summary>
+    /// <param name="wave"></param>
+    public void StartWave(Wave wave)
+    {
+        // 매개변수로 받아온 웨이브의 정보를 저장
+        currentWave = wave;
+        currentMonsterCount = currentWave.maxMonsterSpawnCount;
+        // 몬스터 소환 시작
         StartCoroutine(SpawnMonster());
     }
 
@@ -68,23 +91,51 @@ public class MonsterSpawner : MonoBehaviour
     /// <returns></returns>
     private IEnumerator SpawnMonster()
     {
+        // 현재 웨이브에서 생성한 적의 숫자
+        int spawnMonsterCount = 0;
+
         // 반복문을 조건 없이 실행
-        while (true)
+        //while (true)
+        //{
+        //    // 적 오브젝트를 생성
+        //    GameObject clone = Instantiate();
+        //    // 적 오브젝트에게 컴포넌트 붙여주기
+        //    Monster monster = clone.GetComponent<Monster>();
+
+        //    // monster의 Setup함수 호출(매개변수로 wayPoints 정보를 넣어준다)
+        //    monster.Setup(this, wayPoints);
+        //    // 리스트에 방금 생성된 몬스터의 정보를 저장한다.
+        //    monsterList.Add(monster);
+
+        //    SpawnMonsterSlider(clone);
+
+        //    // spawnTime만큼 대기했다가 실행
+        //    yield return new WaitForSeconds(spawnTime);
+        //}
+
+        // 현재 웨이브에서 생성한 적의 숫자보다 이번 웨이브에서 생성해야 할 적의 수가 더 많다면 실행
+        while(spawnMonsterCount < currentWave.maxMonsterSpawnCount)
         {
-            // 적 오브젝트를 생성
-            GameObject clone = Instantiate(monsterPrefab);
-            // 적 오브젝트에게 컴포넌트 붙여주기
+            // 현재 웨이브에서 등장하는 몬스터가 여러 마리일 경우
+            // 랜덤으로 나오도록 설정한다.
+            int monsterIndex = Random.Range(0, currentWave.monsters.Length);
+            // 현재 웨이브의 최대 몬스터의 갯수만큼 생성
+            GameObject clone = Instantiate(currentWave.monsters[monsterIndex]);
+            // 방금 생성된 적에게 컴포넌트 붙여주기.
             Monster monster = clone.GetComponent<Monster>();
 
-            // monster의 Setup함수 호출(매개변수로 wayPoints 정보를 넣어준다)
+            // wayPoints를 매개변수로 Setup()함수 호출
             monster.Setup(this, wayPoints);
-            // 리스트에 방금 생성된 몬스터의 정보를 저장한다.
+            // 몬스터 리스트에 방금 생성된 몬스터의 정보를 저장한다.
             monsterList.Add(monster);
 
             SpawnMonsterSlider(clone);
 
-            // spawnTime만큼 대기했다가 실행
-            yield return new WaitForSeconds(spawnTime);
+            // 현재 웨이브에서 생성된 적의 숫자를 +1 해준다.
+            spawnMonsterCount++;
+
+            // 현재 웨이브의 소환시간 만큼 대기하고 실행
+            yield return new WaitForSeconds(currentWave.spawnTime);
         }
     }
 
@@ -107,6 +158,7 @@ public class MonsterSpawner : MonoBehaviour
             playerGold.CurrentGold += gold;
         }
 
+        currentMonsterCount--;
         // 죽은 몬스터를 몬스터 리스트에서 삭제한다.
         monsterList.Remove(monster);
 

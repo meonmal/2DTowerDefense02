@@ -17,7 +17,6 @@ public class MonsterHP : MonoBehaviour
     /// </summary>
     private bool isDie = false;
     private Monster monster;
-    private Animator animator;
 
     /// <summary>
     /// 읽기 전용 프로퍼티
@@ -33,7 +32,6 @@ public class MonsterHP : MonoBehaviour
         // 현재 체력을 최대 체력과 같게 설정
         currentHP = maxHP;
         monster = GetComponent<Monster>();
-        animator = GetComponent<Animator>();
     }
 
     /// <summary>
