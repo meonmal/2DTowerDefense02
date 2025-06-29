@@ -47,9 +47,11 @@ public class TowerSpawner : MonoBehaviour
         tile.isBuildTower = true;
         // 현재 갖고 있는 돈에서 타워 건설비용만큼 감소시킨다.
         playerGold.CurrentGold -= towerBuildGold;
+        // 타일보다 z축 -1에 설치한다.
+        Vector3 position = tileTransform.position + Vector3.back;
         // 본인이 정한 타일의 위치에 타워 소환
         // 타워 프리팹을, 본인이 정한 타워의 위치에 회전 없이 소환.
-        GameObject clone = Instantiate(towerPrefab, tileTransform.position, Quaternion.identity);
+        GameObject clone = Instantiate(towerPrefab, position, Quaternion.identity);
         // 타워 무기에 monsterSpawner 정보 전달
         clone.GetComponent<TowerWeapon>().Setup(monsterSpawner);
     }

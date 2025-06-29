@@ -7,6 +7,11 @@ public class ObjectDetector : MonoBehaviour
     /// </summary>
     [SerializeField]
     private TowerSpawner towerSpawner;
+    /// <summary>
+    /// 타워 정보 출력을 위함
+    /// </summary>
+    [SerializeField]
+    private TowerData towerData;
 
     /// <summary>
     /// 메인 카메라
@@ -53,6 +58,12 @@ public class ObjectDetector : MonoBehaviour
                 {
                     // towerSpawner의 TowerSpawn함수 실행
                     towerSpawner.TowerSpawn(hit.transform);
+                }
+                // 만약 클릭한 오브젝트의 태그가 Tower면 실행
+                else if (hit.transform.CompareTag("Tower"))
+                {
+                    // 타워 정보 판넬을 보이게 한다.
+                    towerData.PanelOn(hit.transform);
                 }
             }
         }

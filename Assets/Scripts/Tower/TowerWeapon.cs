@@ -36,6 +36,11 @@ public class TowerWeapon : MonoBehaviour
     [SerializeField]
     private float attackDamage;
     /// <summary>
+    /// 타워의 레벨
+    /// </summary>
+    [SerializeField]
+    private int level;
+    /// <summary>
     /// 타워의 현재 상태
     /// </summary>
     private TowerState towerState = TowerState.SearchTarget;
@@ -47,6 +52,11 @@ public class TowerWeapon : MonoBehaviour
     /// 공격 대상을 찾기 위한 변수(리스트를 통해 찾음)
     /// </summary>
     private MonsterSpawner monsterSpawner;
+
+    public float Damage => attackDamage;
+    public float Rate => attackRate;
+    public float Range => attackRange;
+    public int Level => level;
 
     /// <summary>
     /// 처음의 상태를 세팅하는 함수
