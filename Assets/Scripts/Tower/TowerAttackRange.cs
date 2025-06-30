@@ -2,11 +2,6 @@ using UnityEngine;
 
 public class TowerAttackRange : MonoBehaviour
 {
-    private void Awake()
-    {
-        OffAttackRange();
-    }
-
     /// <summary>
     /// 공격 범위를 보이게 하는 함수
     /// </summary>

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ObjectDetector : MonoBehaviour
 {
@@ -25,6 +26,10 @@ public class ObjectDetector : MonoBehaviour
     /// 광선에 맞은 오브젝트 정보를 담을 변수
     /// </summary>
     private RaycastHit hit;
+    /// <summary>
+    /// 마우스 픽킹으로 선택한 오브젝트를 임시 저장
+    /// </summary>
+    private Transform hitTransform = null;
 
     /// <summary>
     /// 현재 씬이 시작되고 바로 호출되는 함수
@@ -41,6 +46,11 @@ public class ObjectDetector : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if(EventSystem.current.IsPointerOverGameObject() == true)
+        {
+            return;
+        }
+
         // 마우스 왼쪽 버튼을 눌렀을 때 실행
         if (Input.GetMouseButtonDown(0))
         {
@@ -53,6 +63,8 @@ public class ObjectDetector : MonoBehaviour
             // 광선을 결국 z축으로 쏴야 하기 때문이다.
             if(Physics.Raycast(ray, out hit, Mathf.Infinity))
             {
+                hitTransform = hit.transform;
+
                 // 만약 광선을 맞은 오브젝트의 태그가 Tile이라면 실행
                 if (hit.transform.CompareTag("Tile"))
                 {
@@ -66,6 +78,18 @@ public class ObjectDetector : MonoBehaviour
                     towerData.PanelOn(hit.transform);
                 }
             }
+        }
+        // 마우스 왼쪽클릭시 실행
+        else if (Input.GetMouseButtonUp(0))
+        {
+            // 만약 누른 오브젝트가 없거나 누른 오브젝트의 태그가 Tower가 아닐 때 실행
+            if (hitTransform == null || hitTransform.CompareTag("Tower") == false)
+            {
+                // 타워 정보를 미출력한다.
+                towerData.PanelOff();
+            }
+
+            hitTransform = null;
         }
     }
 }

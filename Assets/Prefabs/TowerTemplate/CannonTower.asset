@@ -40,3 +40,4 @@ MonoBehaviour:
     cost: 700
     sell: 700
   sprite: {fileID: 7013631516640934163, guid: b438465a32eb63243a7889eb1f400d29, type: 3}
+  followTower: {fileID: 1975169705798193392, guid: a38405b7c345e8d4a9cbd1ac2b91e090, type: 3}

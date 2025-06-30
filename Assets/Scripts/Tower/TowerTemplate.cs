@@ -6,6 +6,7 @@ public class TowerTemplate : ScriptableObject
     public GameObject towerObject;
     public Weapon[] weapon;
     public Sprite sprite;
+    public GameObject followTower;
     
     [System.Serializable]
     public struct Weapon
