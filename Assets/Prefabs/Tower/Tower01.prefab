@@ -132,7 +132,7 @@ Animator:
   m_GameObject: {fileID: 4934697197223790194}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ec24e4ddfe3ded84495eefe4576cc9fe, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6fd7f3999294e7f44866366a2e19051c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -156,11 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59aa6e1ac44cf1c498b1bf0edcffc0f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerTemplate: {fileID: 11400000, guid: 1290743545aa4944abd0c84d754b88ae, type: 2}
   bullet: {fileID: 6635276424382246271, guid: f1befc223547a60448e2b22b7c17bbc0, type: 3}
   spawnPosition: {fileID: 2773461501114326619}
-  attackRate: 1
-  attackRange: 5
-  attackDamage: 2
+  level: 0
 --- !u!65 &8424633023188409892
 BoxCollider:
   m_ObjectHideFlags: 0

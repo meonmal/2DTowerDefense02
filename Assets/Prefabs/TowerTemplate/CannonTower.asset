@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbc96d8a5c6d1447bcc43f2b86a4a6e, type: 3}
+  m_Name: CannonTower
+  m_EditorClassIdentifier: 
+  towerObject: {fileID: 4934697197223790194, guid: d688c59ef2d2cd244b291f36a78abb6e, type: 3}
+  weapon:
+  - damage: 2
+    rate: 3
+    range: 3
+    cost: 100
+    sell: 50
+  - damage: 3
+    rate: 3
+    range: 3
+    cost: 200
+    sell: 100
+  - damage: 5
+    rate: 2.5
+    range: 3
+    cost: 300
+    sell: 300
+  - damage: 7
+    rate: 2.5
+    range: 5
+    cost: 500
+    sell: 500
+  - damage: 10
+    rate: 2
+    range: 5
+    cost: 700
+    sell: 700
+  sprite: {fileID: 7013631516640934163, guid: b438465a32eb63243a7889eb1f400d29, type: 3}

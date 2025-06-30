@@ -11,6 +11,11 @@ public enum TowerState { SearchTarget = 0, AttackTarget, }
 public class TowerWeapon : MonoBehaviour
 {
     /// <summary>
+    /// 타워 정보를 가져오기 위한 변수
+    /// </summary>
+    [SerializeField]
+    private TowerTemplate towerTemplate;
+    /// <summary>
     /// 발사체 프리팹
     /// </summary>
     [SerializeField]
@@ -20,21 +25,21 @@ public class TowerWeapon : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Transform spawnPosition;
-    /// <summary>
-    /// 공격 쿨타임
-    /// </summary>
-    [SerializeField]
-    private float attackRate;
-    /// <summary>
-    /// 공격 범위
-    /// </summary>
-    [SerializeField]
-    private float attackRange;
-    /// <summary>
-    /// 타워의 공격력
-    /// </summary>
-    [SerializeField]
-    private float attackDamage;
+    ///// <summary>
+    ///// 공격 쿨타임
+    ///// </summary>
+    //[SerializeField]
+    //private float attackRate;
+    ///// <summary>
+    ///// 공격 범위
+    ///// </summary>
+    //[SerializeField]
+    //private float attackRange;
+    ///// <summary>
+    ///// 타워의 공격력
+    ///// </summary>
+    //[SerializeField]
+    //private float attackDamage;
     /// <summary>
     /// 타워의 레벨
     /// </summary>
@@ -52,19 +57,31 @@ public class TowerWeapon : MonoBehaviour
     /// 공격 대상을 찾기 위한 변수(리스트를 통해 찾음)
     /// </summary>
     private MonsterSpawner monsterSpawner;
+    private PlayerGold playerGold;
+    private Tile ownerTile;
 
-    public float Damage => attackDamage;
-    public float Rate => attackRate;
-    public float Range => attackRange;
-    public int Level => level;
+    //public float Damage => attackDamage;
+    //public float Rate => attackRate;
+    //public float Range => attackRange;
+
+    public Sprite TowerSprite => towerTemplate.sprite;
+    public float Damage => towerTemplate.weapon[level].damage;
+    public float Rate => towerTemplate.weapon[level].rate;
+    public float Range => towerTemplate.weapon[level].range;
+    public int Level => level + 1;
+    public int MaxLevel => towerTemplate.weapon.Length;
+
+    
 
     /// <summary>
     /// 처음의 상태를 세팅하는 함수
     /// </summary>
     /// <param name="monsterSpawner"></param>
-    public void Setup(MonsterSpawner monsterSpawner)
+    public void Setup(MonsterSpawner monsterSpawner, PlayerGold playerGold, Tile ownerTile)
     {
         this.monsterSpawner = monsterSpawner;
+        this.playerGold = playerGold;
+        this.ownerTile = ownerTile;
 
         // 처음의 상태를 탐색 상태로 한다.
         ChangeState(TowerState.SearchTarget);
@@ -151,7 +168,7 @@ public class TowerWeapon : MonoBehaviour
                 // 현재 맵에 있는 적과 자신의 거리를 계산한다.
                 float distance = Vector3.Distance(monsterSpawner.MonsterList[i].transform.position, transform.position);
                 // 만약 위에서 계산한 거리가 공격 범위 안에 있고 현재 검사한 적보다 가까우면 실행
-                if(distance <= attackRange && distance <= closestDistSqr)
+                if(distance <= towerTemplate.weapon[level].range && distance <= closestDistSqr)
                 {
                     // 현재 거기를 closestDistSqr에 저장
                     closestDistSqr = distance;
@@ -192,7 +209,7 @@ public class TowerWeapon : MonoBehaviour
             // 몬스터와 타워의 거리를 계산한다.
             float distance = Vector3.Distance(attackTarget.transform.position, transform.position);
             // 만약 그 거리가 공격 범위 밖에 있다면 실행
-            if (distance > attackRange)
+            if (distance > towerTemplate.weapon[level].range)
             {
                 // 공격 대상은 없는 것으로 설정
                 attackTarget = null;
@@ -203,7 +220,7 @@ public class TowerWeapon : MonoBehaviour
             }
 
             // 공격 쿨타임만큼 대기했다가 실행
-            yield return new WaitForSeconds(attackRate);
+            yield return new WaitForSeconds(towerTemplate.weapon[level].rate);
 
             SpawnBullet();
         }
@@ -218,6 +235,34 @@ public class TowerWeapon : MonoBehaviour
         // 발사체를, 스폰포지션에 회전 없이 소환
         GameObject clone = Instantiate(bullet, spawnPosition.position, Quaternion.identity);
         // 생성된 발사체에게 공격대상의 정보를 제공
-        clone.GetComponent<Bullet>().Setup(attackTarget, attackDamage);
+        clone.GetComponent<Bullet>().Setup(attackTarget, towerTemplate.weapon[level].damage);
+    }
+
+    /// <summary>
+    /// 타워의 레벨을 올리는 함수
+    /// </summary>
+    /// <returns></returns>
+    public bool Upgrade()
+    {
+        // 만약 현재 플레이어가 가진 돈 보다 타워 업그레이드 비용이 더 높다면 실행
+        if(playerGold.CurrentGold < towerTemplate.weapon[level + 1].cost)
+        {
+            // 실행 ㄴ
+            return false;
+        }
+
+        // 타워의 레벨을 올리고
+        level++;
+        // 현재 돈에서 타워의 레벨당 비용만큼 차감
+        playerGold.CurrentGold -= towerTemplate.weapon[level].cost;
+
+        return true;
+    }
+
+    public void Sell()
+    {
+        playerGold.CurrentGold += towerTemplate.weapon[level].sell;
+        ownerTile.isBuildTower = false;
+        Destroy(gameObject);
     }
 }

@@ -16,9 +16,12 @@ public class TowerData : MonoBehaviour
     private TextMeshProUGUI towerLevel;
     [SerializeField]
     private TowerAttackRange towerAttackRange;
+    [SerializeField]
+    private Button upgradeButton;
+    [SerializeField]
+    private SystemText systemText;
 
     private TowerWeapon currentTower;
-
 
     private void Awake()
     {
@@ -51,9 +54,34 @@ public class TowerData : MonoBehaviour
 
     public void TowerDataUpdate()
     {
+        towerImage.sprite = currentTower.TowerSprite;
         towerDamage.text = "Damage : " + currentTower.Damage;
         towerRate.text = "Rate : " + currentTower.Rate;
         towerRange.text = "Range : " + currentTower.Range;
         towerLevel.text = "Level : " + currentTower.Level;
+
+        // 업그레이드가 불가능해지면 업그레이드 버튼을 비활성화
+        upgradeButton.interactable = currentTower.Level < currentTower.MaxLevel ? true : false;
+    }
+
+    public void ClickButtonUpgrade()
+    {
+        bool isSucces = currentTower.Upgrade();
+
+        if(isSucces == true)
+        {
+            TowerDataUpdate();
+            towerAttackRange.OnAttackRange(currentTower.transform.position, currentTower.Range);
+        }
+        else
+        {
+            systemText.PrintText(SystemType.Money);
+        }
+    }
+
+    public void ClickButtonSell()
+    {
+        currentTower.Sell();
+        PanelOff();
     }
 }
