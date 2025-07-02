@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 3066061766870389761}
   - component: {fileID: 8424633023188409892}
   m_Layer: 0
-  m_Name: Cannon
+  m_Name: CannonTower
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -157,9 +157,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerTemplate: {fileID: 11400000, guid: 1290743545aa4944abd0c84d754b88ae, type: 2}
-  bullet: {fileID: 6635276424382246271, guid: f1befc223547a60448e2b22b7c17bbc0, type: 3}
   spawnPosition: {fileID: 2773461501114326619}
-  level: 0
+  towerType: 0
+  bullet: {fileID: 6635276424382246271, guid: f1befc223547a60448e2b22b7c17bbc0, type: 3}
+  lineRenderer: {fileID: 0}
+  hitEffect: {fileID: 0}
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!65 &8424633023188409892
 BoxCollider:
   m_ObjectHideFlags: 0

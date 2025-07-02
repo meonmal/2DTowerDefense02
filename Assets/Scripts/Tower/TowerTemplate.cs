@@ -16,6 +16,14 @@ public class TowerTemplate : ScriptableObject
         /// </summary>
         public float damage;
         /// <summary>
+        /// 타워의 감속 퍼센트(0.2 = 20%)
+        /// </summary>
+        public float slow;
+        /// <summary>
+        /// 공격력 증가율(0.2 = +20%)
+        /// </summary>
+        public float buff;
+        /// <summary>
         /// 타워의 공격 쿨타임
         /// </summary>
         public float rate;

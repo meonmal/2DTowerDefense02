@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbc96d8a5c6d1447bcc43f2b86a4a6e, type: 3}
+  m_Name: LaserTower
+  m_EditorClassIdentifier: 
+  towerObject: {fileID: 827698036465799126, guid: 4d0f2677a4cf823498e1599b0705a2ba, type: 3}
+  weapon:
+  - damage: 1
+    rate: 0
+    range: 3
+    cost: 200
+    sell: 100
+  - damage: 1.5
+    rate: 0
+    range: 4
+    cost: 300
+    sell: 200
+  - damage: 2
+    rate: 0
+    range: 4
+    cost: 500
+    sell: 400
+  - damage: 3.5
+    rate: 0
+    range: 6
+    cost: 800
+    sell: 600
+  - damage: 5
+    rate: 0
+    range: 8
+    cost: 1200
+    sell: 800
+  sprite: {fileID: 4628221225906215552, guid: 6946cd59d8c7e234f851a23d8ce98454, type: 3}
+  followTower: {fileID: 1975169705798193392, guid: 3ae0d990f26b9504e8c18ab0d1808f4f, type: 3}

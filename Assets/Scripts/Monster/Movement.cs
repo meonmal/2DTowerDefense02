@@ -12,11 +12,21 @@ public class Movement : MonoBehaviour
     /// </summary>
     [SerializeField]
     private Vector3 moveDirection = Vector3.zero;
+    private float baseMoveSpeed;
 
     /// <summary>
-    /// 읽기 전용 프로퍼티
+    /// 외부에서 수정 가능함.
     /// </summary>
-    public float MoveSpeed => moveSpeed;
+    public float MoveSpeed
+    {
+        set => moveSpeed = Mathf.Max(0, value);
+        get => moveSpeed;
+    }
+
+    private void Awake()
+    {
+        baseMoveSpeed = moveSpeed;
+    }
 
     /// <summary>
     /// 매 프레임 마다 실행되는 함수
@@ -34,5 +44,10 @@ public class Movement : MonoBehaviour
     public void MoveDir(Vector3 direction)
     {
         moveDirection = direction;
+    }
+
+    public void ResetMoveSpeed()
+    {
+        moveSpeed = baseMoveSpeed;
     }
 }

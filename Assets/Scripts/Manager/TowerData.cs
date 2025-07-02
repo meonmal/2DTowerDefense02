@@ -13,6 +13,10 @@ public class TowerData : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI towerRange;
     [SerializeField]
+    private TextMeshProUGUI towerUpgradeCost;
+    [SerializeField]
+    private TextMeshProUGUI towerSellCost;
+    [SerializeField]
     private TextMeshProUGUI towerLevel;
     [SerializeField]
     private TowerAttackRange towerAttackRange;
@@ -54,11 +58,26 @@ public class TowerData : MonoBehaviour
 
     public void TowerDataUpdate()
     {
+        if(currentTower.TowerType == TowerType.Cannon || currentTower.TowerType == TowerType.Laser)
+        {
+            towerDamage.text = "Damage : " + currentTower.Damage + "+" + "<color=red>" + currentTower.AddedDamage.ToString("F1") + "</color>";
+        }
+        else if(currentTower.TowerType == TowerType.Slow)
+        {
+            towerDamage.text = "Slow : " + currentTower.Slow * 100 + "%";
+        }
+        else if(currentTower.TowerType == TowerType.Buff)
+        {
+            towerDamage.text = "Buff : " + currentTower.Buff * 100 + "%";
+        }
+
         towerImage.sprite = currentTower.TowerSprite;
-        towerDamage.text = "Damage : " + currentTower.Damage;
+        //towerDamage.text = "Damage : " + currentTower.Damage;
         towerRate.text = "Rate : " + currentTower.Rate;
         towerRange.text = "Range : " + currentTower.Range;
         towerLevel.text = "Level : " + currentTower.Level;
+        towerUpgradeCost.text = currentTower.UgradeCost.ToString();
+        towerSellCost.text = currentTower.SellCost.ToString();
 
         // 업그레이드가 불가능해지면 업그레이드 버튼을 비활성화
         upgradeButton.interactable = currentTower.Level < currentTower.MaxLevel ? true : false;

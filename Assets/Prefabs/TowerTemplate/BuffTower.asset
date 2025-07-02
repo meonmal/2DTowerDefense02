@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbc96d8a5c6d1447bcc43f2b86a4a6e, type: 3}
+  m_Name: BuffTower
+  m_EditorClassIdentifier: 
+  towerObject: {fileID: 6972407825219189763, guid: b6dead6f8fdad96479cf32c64c005c26, type: 3}
+  weapon:
+  - damage: 0
+    slow: 0
+    buff: 0.1
+    rate: 0
+    range: 3
+    cost: 700
+    sell: 500
+  - damage: 0
+    slow: 0
+    buff: 0.3
+    rate: 0
+    range: 3
+    cost: 1000
+    sell: 800
+  - damage: 0
+    slow: 0
+    buff: 0.5
+    rate: 0
+    range: 5
+    cost: 1600
+    sell: 1200
+  - damage: 0
+    slow: 0
+    buff: 0.7
+    rate: 0
+    range: 5
+    cost: 2200
+    sell: 1600
+  - damage: 0
+    slow: 0
+    buff: 1
+    rate: 0
+    range: 7
+    cost: 3000
+    sell: 2000
+  sprite: {fileID: -9010615838638220262, guid: 26f2fab31eacb6948aaee40453cfc60b, type: 3}
+  followTower: {fileID: 1975169705798193392, guid: 9933ac26d681ed347a6d702f3bd6b210, type: 3}

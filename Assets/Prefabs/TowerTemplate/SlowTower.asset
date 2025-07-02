@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bbc96d8a5c6d1447bcc43f2b86a4a6e, type: 3}
+  m_Name: SlowTower
+  m_EditorClassIdentifier: 
+  towerObject: {fileID: 4859407596000512267, guid: c34e9481af6f2ab4989b7481eb18f35f, type: 3}
+  weapon:
+  - damage: 0
+    slow: 0.1
+    rate: 0
+    range: 3
+    cost: 400
+    sell: 200
+  - damage: 0
+    slow: 0.2
+    rate: 0
+    range: 4
+    cost: 600
+    sell: 400
+  - damage: 0
+    slow: 0.3
+    rate: 0
+    range: 4
+    cost: 1000
+    sell: 700
+  - damage: 0
+    slow: 0.5
+    rate: 0
+    range: 5
+    cost: 1400
+    sell: 1000
+  - damage: 0
+    slow: 0.7
+    rate: 0
+    range: 6
+    cost: 1800
+    sell: 1400
+  sprite: {fileID: 6197056623017412966, guid: 25e3c3e2a286eee48bba19e8d339e062, type: 3}
+  followTower: {fileID: 1975169705798193392, guid: aebbc35e3588d1c48ad144f942eb6106, type: 3}
