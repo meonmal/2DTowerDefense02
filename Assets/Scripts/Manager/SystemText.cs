@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.Switch;
 
 public enum SystemType { Money = 0, Build}
 public class SystemText : MonoBehaviour
